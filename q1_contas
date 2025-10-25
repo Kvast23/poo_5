@@ -1,0 +1,16 @@
+class Cliente {
+    constructor(
+        public id: number,
+        public nome: string,
+        public cpf: string,
+        public dataNascimento: Date,
+        public contas: Conta[] = []
+    ) {}
+}
+        adicionarConta(conta: Conta): void {
+        if (this.contas.some(c => c.id === conta.id)) {
+            throw new Error("Conta já associada a este cliente");
+        }
+        this.contas.push(conta);
+    }
+}
