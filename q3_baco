@@ -1,0 +1,76 @@
+lass Banco {
+    private clientes: Cliente[] = [];
+    private contas: Conta[] = [];
+
+    // a) Adicionar cliente
+    inserirCliente(cliente: Cliente): void {
+        const clienteExistente = this.clientes.find(
+            c => c.id === cliente.id || c.cpf === cliente.cpf
+        );
+        if (clienteExistente) {
+            throw new Error("Cliente com ID ou CPF já cadastrado");
+        }
+        this.clientes.push(cliente);
+    }
+
+    // b) Consultar cliente pelo CPF
+    consultarCliente(cpf: string): Cliente | undefined {
+        return this.clientes.find(cliente => cliente.cpf === cpf);
+    }
+
+    // c) Associar um cliente a uma conta
+    associarContaCliente(numeroConta: string, cpfCliente: string): void {
+        const cliente = this.consultarCliente(cpfCliente);
+        const conta = this.contas.find(c => c.numero === numeroConta);
+
+        if (!cliente) {
+            throw new Error("Cliente não encontrado");
+        }
+        if (!conta) {
+            throw new Error("Conta não encontrada");
+        }
+        if (conta.cliente) {
+            throw new Error("Conta já está associada a outro cliente");
+        }
+        if (cliente.contas.some(c => c.numero === numeroConta)) {
+            throw new Error("Conta já associada a este cliente");
+        }
+
+        conta.associarCliente(cliente);
+        cliente.adicionarConta(conta);
+    }
+
+    // d) Listar contas de um cliente
+    listarContasCliente(cpf: string): Conta[] {
+        const cliente = this.consultarCliente(cpf);
+        return cliente ? cliente.contas : [];
+    }
+
+    // e) Totalizar saldo por cliente
+    totalizarSaldoCliente(cpf: string): number {
+        const cliente = this.consultarCliente(cpf);
+        return cliente 
+            ? cliente.contas.reduce((total, conta) => total + conta.saldo, 0)
+            : 0;
+    }
+
+    // g) Incluir conta
+    inserirConta(conta: Conta): void {
+        const contaExistente = this.contas.find(
+            c => c.id === conta.id || c.numero === conta.numero
+        );
+        if (contaExistente) {
+            throw new Error("Conta com ID ou número já existente");
+        }
+        this.contas.push(conta);
+    }
+
+    // Métodos auxiliares para testes
+    getClientes(): Cliente[] {
+        return [...this.clientes];
+    }
+
+    getContas(): Conta[] {
+        return [...this.contas];
+    }
+}
