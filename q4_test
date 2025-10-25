@@ -1,0 +1,19 @@
+// Testes
+const banco = new Banco();
+
+// Criar e adicionar cliente
+const cliente = new Cliente(1, "João Silva", "123.456.744-00", new Date());
+banco.inserirCliente(cliente);
+
+// Criar e adicionar conta
+const conta = new Conta(1, "CC-001");
+banco.inserirConta(conta);
+
+// Associar conta ao cliente
+banco.associarContaCliente("CC-001", "123.456.744-00");
+
+// Listar contas do cliente
+console.log(banco.listarContasCliente("123.456.744-00"));
+
+// Calcular saldo total
+console.log(banco.totalizarSaldoCliente("123.456.744-00"));
