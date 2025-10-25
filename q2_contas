@@ -1,0 +1,17 @@
+class Conta {
+    constructor(
+        public id: number,
+        public numero: string,
+        public cliente: Cliente | null = null,
+        public dataDeAbertura: Date = new Date(),
+        public saldo: number = 0
+    ) {}
+
+    //  associando cliente à conta
+    associarCliente(cliente: Cliente): void {
+        if (this.cliente) {
+            throw new Error("Conta já está associada a um cliente");
+        }
+        this.cliente = cliente;
+    }
+}
