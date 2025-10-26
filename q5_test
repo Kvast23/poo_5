@@ -1,0 +1,35 @@
+const banco = new Banco();
+
+// --- Criando clientes ---
+const cliente1 = new Cliente(1, "Maria Silva", "111.111.111-11", new Date(1990, 5, 12));
+const cliente2 = new Cliente(2, "João Souza", "222.222.222-22", new Date(1985, 3, 8));
+const clienteDuplicado = new Cliente(1, "Pedro", "111.111.111-11", new Date(2000, 10, 5));
+
+
+banco.inserirCliente(cliente1);
+banco.inserirCliente(cliente2);
+banco.inserirCliente(clienteDuplicado); 
+const conta1 = new Conta(1, "0001", 1000);
+const conta2 = new Conta(2, "0002", 500);
+const contaDuplicada = new Conta(1, "0001", 200);
+
+
+banco.inserirConta(conta1);
+banco.inserirConta(conta2);
+banco.inserirConta(contaDuplicada); 
+
+]banco.associarContaCliente("0001", "111.111.111-11"); // Ok
+banco.associarContaCliente("0001", "111.111.111-11"); // Repetida (falha)
+banco.associarContaCliente("0002", "222.222.222-22"); // Ok
+
+
+conta1.depositar(200); 
+conta2.sacar(100);     
+
+
+console.log("💰 Contas de Maria:", banco.listarContasCliente("111.111.111-11"));
+console.log("💰 Contas de João:", banco.listarContasCliente("222.222.222-22"));
+
+
+console.log("💰 Total de Maria:", banco.totalizarSaldoCliente("111.111.111-11"));
+console.log("💰 Total de João:", banco.totalizarSaldoCliente("222.222.222-22"));
